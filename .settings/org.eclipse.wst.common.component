@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="cmpe281-team3-movie-rec-engine">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="context-root" value="cmpe281-team3-movie-rec-engine"/>
+        <property name="java-output-path" value="/cmpe281-team3-movie-rec-engine/build/classes"/>
+    </wb-module>
+</project-modules>
