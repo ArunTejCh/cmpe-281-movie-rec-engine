@@ -1,6 +1,6 @@
 LOAD DATA INFILE 'D:\Masters\\CMPE 281\\Projects\\Project 2\\Movielens\\ml-20m\\movies.txt'
 INTO TABLE movies
-FIELDS TERMINATED BY ''
+FIELDS TERMINATED BY '	'
 IGNORE 1 LINES
 (movie_id,title,genres);
 

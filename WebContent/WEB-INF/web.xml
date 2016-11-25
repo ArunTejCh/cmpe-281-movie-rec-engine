@@ -9,4 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>MovieRecApiServlet</display-name>
+    <servlet-name>MovieRecApiServlet</servlet-name>
+    <servlet-class>com.cmpe281.project2.restapis.MovieRecApiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MovieRecApiServlet</servlet-name>
+    <url-pattern>/MovieRecApiServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
