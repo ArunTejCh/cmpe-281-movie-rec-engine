@@ -14,6 +14,10 @@ SET    movies.no_of_ratings = t2.count
 , movies.avg_rating = t2.rating
 WHERE  movies.movie_id = t2.movie_id;
 
+#INSERT OVERWRITE LOCAL DIRECTORY '/home/aruntej/codebase/recoeng/temp.csv' 
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ',' 
+select movie_id, count(*) as count, AVG(rating) as rating from ratings group by movie_id;
 
 
 

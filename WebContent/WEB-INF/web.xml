@@ -17,6 +17,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>MovieRecApiServlet</servlet-name>
-    <url-pattern>/MovieRecApiServlet</url-pattern>
+    <url-pattern>/recommendations</url-pattern>
   </servlet-mapping>
 </web-app>
