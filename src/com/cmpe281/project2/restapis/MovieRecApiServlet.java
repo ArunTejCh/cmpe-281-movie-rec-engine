@@ -43,9 +43,18 @@ public class MovieRecApiServlet extends HttpServlet {
 		if (similarTitles != null) {
 
 			if (similarTitles.size() == 1) {
-				List<Movie> recoList = recoEngine.getRecommendations(similarTitles.get(0).getTitle());
+				List<Movie> recoList = recoEngine.getRecommendations(similarTitles.get(0));
 				if (recoList != null) {
-					response.getWriter().append(recoList.toString());
+					response.setContentType("text/plain");
+					ServletOutputStream out = response.getOutputStream();
+					out.println("The following movies are recommended for viewers of "+ similarTitles.get(0).getTitle());
+					out.println("");
+					for (Movie m : recoList) {
+						out.println("Title        : "+m.getTitle()+"");
+						out.println("Rating       : "+Math.round(m.getAvgRating() * 10D) / 10D+"");
+						out.println("No of Reviews: "+m.getNoOfReviews()+"");
+						out.println("");
+					}
 				} else {
 					response.getWriter().append("Sorry!! No recommendations available for this criteria :( ");
 				}

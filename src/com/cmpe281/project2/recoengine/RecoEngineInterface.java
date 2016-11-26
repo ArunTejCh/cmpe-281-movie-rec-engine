@@ -12,7 +12,7 @@ public interface RecoEngineInterface {
 	 * @param title
 	 * @return
 	 */
-	List<Movie> getRecommendations(String title);
+	List<Movie> getRecommendations(Movie movie);
 	
 	/**
 	 * Advanced method for getting recommendations. Provides more flexibility to user.

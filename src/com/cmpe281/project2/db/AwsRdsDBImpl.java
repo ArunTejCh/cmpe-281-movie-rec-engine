@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +47,36 @@ public class AwsRdsDBImpl implements RecEngineDBLayerInterface {
 	}
 
 	@Override
-	public List<Movie> getTopMovies(String genres, Double rating, int noOfRatings, int count) {
-		return null;
+	public List<Movie> getTopMovies(String genres, Double rating, int noOfRatings, int count, String curTitle) {
+		List<Movie> movieList = null;
+		try {
+			String sql;
+			sql = "select * from movies where avg_rating > ? and no_of_ratings > ? and genres = ? and title != ? ORDER BY avg_rating DESC limit ?";
+			PreparedStatement pst = conn.prepareStatement(sql);
+			pst.setDouble(1, rating);
+			pst.setInt(2, noOfRatings);
+			pst.setString(3, genres);
+			pst.setString(4, curTitle);
+			pst.setInt(5, count);
+			ResultSet rs = pst.executeQuery();
+			movieList = new ArrayList<Movie>();
+			while (rs.next()) {
+				// Retrieve by column name
+				String name = rs.getString("title");
+				String curGenres = rs.getString("genres");
+				int no = rs.getInt("no_of_ratings");
+				double curRating = rs.getDouble("avg_rating");
+				movieList.add(new Movie(name, curGenres, curRating, no));
+			}
+			rs.close();
+			pst.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return movieList;
 	}
 
 	@Override
