@@ -33,7 +33,10 @@ public class AwsRdsDBImpl implements RecEngineDBLayerInterface {
 	}
 
 	private AwsRdsDBImpl() {
+		openConnection();
+	}
 
+	private void openConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Connecting to aws database...");
@@ -43,13 +46,15 @@ public class AwsRdsDBImpl implements RecEngineDBLayerInterface {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
 	public List<Movie> getTopMovies(String genres, Double rating, int noOfRatings, int count, String curTitle) {
 		List<Movie> movieList = null;
 		try {
+			if(conn.isClosed()){
+				openConnection();
+			}
 			String sql;
 			sql = "select * from movies where avg_rating > ? and no_of_ratings > ? and genres = ? and title != ? ORDER BY avg_rating DESC limit ?";
 			PreparedStatement pst = conn.prepareStatement(sql);
@@ -83,10 +88,13 @@ public class AwsRdsDBImpl implements RecEngineDBLayerInterface {
 	public List<Movie> getMoviesByTitle(String title) {
 		List<Movie> movieList = null;
 		try {
+			if(conn.isClosed()){
+				openConnection();
+			}
 			String sql;
 			sql = "SELECT * from movies where title like ?";
 			PreparedStatement pst = conn.prepareStatement(sql);
-			String searchTitle = "%"+title+"%";
+			String searchTitle = "%" + title + "%";
 			pst.setString(1, searchTitle);
 			ResultSet rs = pst.executeQuery();
 			movieList = new ArrayList<Movie>();
