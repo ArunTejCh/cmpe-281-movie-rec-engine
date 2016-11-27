@@ -11,6 +11,47 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/main.css">
+
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 	
+ 	
+   <script>
+  $( function() {
+    $( "#rating-slider").slider({
+      range: "max",
+      min: 1,
+      max: 5,
+      value: 1,
+      step:0.5,
+      slide: function( event, ui ) {
+        $( "#min_rating" ).val( ui.value );
+      }
+    });
+    $( "#min_rating" ).val( $("#rating-slider" ).slider( "value" ) );
+  } );
+  </script>	
+  
+  
+   <script>
+  $( function() {
+    $( "#reviews-slider").slider({
+      range: "max",
+      min: 20,
+      max: 20000,
+      value: 20,
+      slide: function( event, ui ) {
+        $( "#min_reviews" ).val( ui.value );
+      }
+    });
+    $( "#min_reviews" ).val( $("#reviews-slider" ).slider( "value" ) );
+  } );
+  </script>	
+  
+
+
 </head>
 <body>
 	<div style="padding-left: 50px;">
@@ -30,23 +71,31 @@ List<Movie> mList = (List<Movie>)request.getAttribute("movieList");
 		<!-- Form Area -->
 		<div class="contact-form">
 			<!-- Form -->
-			<form id="contact-us" method="post" action="recommendations">
+			<form id="contact-us" method="post" action="recommendations"  >
 				<!-- Left Inputs -->
 				<div class="col-xs-6 wow animated slideInLeft" data-wow-delay=".5s">
 					<!-- Name -->
 					<input type="text" name="name" id="name" required="required"
 						class="form" placeholder="Movie Title" />
-					<!-- Email -->
-					<!-- <label for="min_rating">Minimum Rating</label>
-                            <input type="range" name="min_rating" id="min_rating" class="form" min="1" max="4" value="2" step="1" oninput="outputUpdate(value)" placeholder="Minimum Rating" />
-                            <output for="min_rating" id="rating">2</output>
-                            <script type ="text/javascript">
-                            function outputUpdate(vol) {
-                            	document.querySelector('#rating').value = vol;
-                            }
-                            </script>
-                            Subject
-                            <input type="range" name="subject" id="subject" class="form" placeholder="Minimum No of Reviews" />-->
+					
+					
+					<label for="min_rating">Minimum average rating :</label>
+					<input type="text" name ="min_rating" id="min_rating"  style="border:0; color:#f6931f; font-weight:bold;">	
+					
+					
+					<div id="rating-slider" style = "max-width:100px"  ></div>
+					
+					
+					<p >	
+					<label for="min_reviews">Minimum no of reviews :</label>
+					<input type="text" name = "min_reviews" id="min_reviews"  style="border:0; color:#f6931f; font-weight:bold;" >	
+					</p>
+					
+					<div id="reviews-slider" style = "max-width:250px" ></div>
+					
+					
+					
+					
 				</div>
 				<!-- End Left Inputs -->
 				<!-- Right Inputs -->
@@ -90,13 +139,7 @@ List<Movie> mList = (List<Movie>)request.getAttribute("movieList");
 				<div class="clear"></div>
 			</form>
 
-			<!-- Your Mail Message -->
-			<div class="mail-message-area">
-				<!-- Message -->
-				<div class="alert gray-bg mail-message not-visible-message">
-					<strong>Thank You !</strong> Your email has been delivered.
-				</div>
-			</div>
+			
 
 		</div>
 		<!-- End Contact Form Area -->

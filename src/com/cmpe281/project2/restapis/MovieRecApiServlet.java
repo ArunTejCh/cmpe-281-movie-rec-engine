@@ -39,11 +39,20 @@ public class MovieRecApiServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String movieTitle = request.getParameter("name");
+		String minAverageRating = request.getParameter("min_rating");
+		String minReviews = request.getParameter("min_reviews");
+		
+		System.out.println("Outputs  "+movieTitle+" "+minAverageRating+" "+minReviews);
+		
+
 		List<Movie> similarTitles = db.getMoviesByTitle(movieTitle);
 		if (similarTitles != null && similarTitles.size() != 0) {
 
 			if (similarTitles.size() == 1) {
-				List<Movie> recoList = recoEngine.getRecommendations(similarTitles.get(0));
+				double minRatingValues = Double.parseDouble(minAverageRating);
+				int noOfReviews = Integer.parseInt(minReviews);
+				
+				List<Movie> recoList = recoEngine.getRecommendations(similarTitles.get(0),minRatingValues,noOfReviews);
 				if (recoList != null) {
 					request.setAttribute("message", "The following movies are recommended for viewers of "+ similarTitles.get(0).getTitle());
 					request.setAttribute("movieList", recoList);

@@ -58,10 +58,23 @@ public class SimpleRecoEngineImpl implements RecoEngineInterface {
 		return null;
 	}
 
-	
-	
-	
-	
-	
+	@Override
+	public List<Movie> getRecommendations(Movie movie, Double minRating, int noOfRatings) {
+		
+		List<Movie> mList = new ArrayList<Movie>();
+		int balanceRecs = NO_OF_RECS;
+		while(balanceRecs > 0){
+			List<Movie> tempList = db.getTopMovies(movie.getGenres(), minRating, noOfRatings, balanceRecs, movie.getTitle());
+			mList.addAll(tempList);
+			balanceRecs = balanceRecs - tempList.size();
+			if(balanceRecs > 0){
+				truncateGenres(movie);
+				if(movie.getGenres().equalsIgnoreCase("")){
+					break;
+				}
+			}
+		}
+		return mList;
+	}
 	
 }
