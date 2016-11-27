@@ -39,9 +39,10 @@
   $( function() {
     $( "#reviews-slider").slider({
       range: "max",
-      min: 20,
-      max: 20000,
-      value: 20,
+      min: 100,
+      max: 10000,
+      value: 500,
+      step: 100,
       slide: function( event, ui ) {
         $( "#min_reviews" ).val( ui.value );
       }
