@@ -13,7 +13,7 @@ public class SimpleRecoEngineImpl implements RecoEngineInterface {
 	
 	private static final int NO_OF_RECS = 5;
 	private static final double MIN_RATING = 2.5;
-	private static final int MIN_REVIEWS = 50;
+	private static final int MIN_REVIEWS = 2000;
 	
 	@Override
 	public List<Movie> getRecommendations(Movie movie) {
@@ -37,9 +37,9 @@ public class SimpleRecoEngineImpl implements RecoEngineInterface {
 		String [] genreList = movie.getGenres().split("\\|");
 		StringBuilder temp = new StringBuilder();
 		
-		for(int i = 1; i < genreList.length; i++){
-			if(i == genreList.length - 1){
-				temp.append(genreList[i]);
+		for(int i = 0; i < genreList.length - 1; i++){
+			if(i == genreList.length - 2){
+				temp.append(genreList[i]+"\r");
 			}else{
 				temp.append(genreList[i]+"|");
 			}
