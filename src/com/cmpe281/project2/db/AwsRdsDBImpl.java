@@ -71,7 +71,7 @@ public class AwsRdsDBImpl implements RecEngineDBLayerInterface {
 				String curGenres = rs.getString("genres");
 				int no = rs.getInt("no_of_ratings");
 				double curRating = rs.getDouble("avg_rating");
-				movieList.add(new Movie(name, curGenres, curRating, no));
+				movieList.add(new Movie(name, curGenres, Math.round(curRating * 10D) / 10D, no));
 			}
 			rs.close();
 			pst.close();
@@ -104,7 +104,7 @@ public class AwsRdsDBImpl implements RecEngineDBLayerInterface {
 				String genres = rs.getString("genres");
 				int no = rs.getInt("no_of_ratings");
 				double rating = rs.getDouble("avg_rating");
-				movieList.add(new Movie(name, genres, rating, no));
+				movieList.add(new Movie(name, genres, Math.round(rating * 10D) / 10D, no));
 			}
 			rs.close();
 			pst.close();
