@@ -53,7 +53,7 @@ List<Movie> mList = (List<Movie>)request.getAttribute("movieList");
 				<div class="col-xs-6 wow animated slideInRight" data-wow-delay=".5s">
 					<!-- Message -->
 					<div id="results" class="form textarea"
-						style="min-width: 100%; min-height: 250px; overflow: scroll;">
+						style="min-width: 100%; min-height: 320px; overflow: scroll;">
 						<% if(message == null){ %>
 						<p>Results....</p>
 						<% } else{%>
