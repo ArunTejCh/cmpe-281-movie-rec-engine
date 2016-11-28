@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Recommendation Portal</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/main.css">
@@ -80,19 +80,20 @@ List<Movie> mList = (List<Movie>)request.getAttribute("movieList");
 						class="form" placeholder="Movie Title" />
 					
 					
+					<p  style = "padding-left : 6px; padding-bottom : 3px">
 					<label for="min_rating">Minimum average rating :</label>
 					<input type="text" name ="min_rating" id="min_rating"  style="border:0; color:#f6931f; font-weight:bold;">	
+					</p>
+					
+					<div id="rating-slider" style = "max-width:100px;margin-left:7px;margin-bottom:25px"  ></div>
 					
 					
-					<div id="rating-slider" style = "max-width:100px"  ></div>
-					
-					
-					<p >	
+					<p style = "margin-top :10px;padding-left:6px;padding-bottom:3px" >	
 					<label for="min_reviews">Minimum no of reviews :</label>
 					<input type="text" name = "min_reviews" id="min_reviews"  style="border:0; color:#f6931f; font-weight:bold;" >	
 					</p>
 					
-					<div id="reviews-slider" style = "max-width:250px" ></div>
+					<div id="reviews-slider" style = "max-width:250px;margin-left:7px" ></div>
 					
 					
 					
