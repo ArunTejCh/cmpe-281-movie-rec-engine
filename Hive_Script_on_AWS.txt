@@ -1,0 +1,34 @@
+CREATE DATABASE IF NOT EXISTS movies_db;
+
+USE movies_db;
+
+DROP TABLE IF EXISTS ratings;
+
+set mapreduce.job.reduces= 4;
+set mapred.min.split.size=83886080;
+
+CREATE EXTERNAL TABLE ratings (uid int,movie_id int,rating int,rating_date timestamp) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+    LOCATION 's3n://inputsuchetamandal/';	
+	
+INSERT OVERWRITE DIRECTORY 's3n://moviedataoutput/' SELECT movie_id , AVG(rating) AS rating FROM ratings GROUP BY movie_id;
+
+CREATE TABLE ratings
+(
+  movie_id int,
+  rating float(2,1),
+  CONSTRAINT pk_RatingID PRIMARY KEY (movie_id)
+);
+
+LOAD DATA LOCAL INFILE 'C:\\Users\\suche\\Desktop\\rev3.csv'
+INTO TABLE ratings
+FIELDS TERMINATED BY ',';
+
+
+
+
+
+hadoop@ec2-54-166-24-219.compute-1.amazonaws.com
+DROP DATABASE IF EXISTS movies_db CASCADE;
+
+http://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-copydata-mysql.html
+
