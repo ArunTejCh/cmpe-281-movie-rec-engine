@@ -46,6 +46,7 @@ public class MovieRecApiServlet extends HttpServlet {
 		
 
 		List<Movie> similarTitles = db.getMoviesByTitle(movieTitle);
+		if (movieTitle.length()>0) {
 		if (similarTitles != null && similarTitles.size() != 0) {
 
 			if (similarTitles.size() == 1) {
@@ -76,6 +77,23 @@ public class MovieRecApiServlet extends HttpServlet {
 			request.setAttribute("message", "Sorry!! No movie with this name is present ");
 			request.getRequestDispatcher("recommendations.jsp").forward(request, response);
 		}
+	  }else if (movieGenre != null && movieGenre.length()>0) {
+			double minRatingValues = Double.parseDouble(minAverageRating);
+			int noOfReviews = Integer.parseInt(minReviews);
+			List<Movie> recoList = recoEngine.getRecommendationsByGenre(movieGenre, minRatingValues, noOfReviews);
+			if (recoList != null) {
+				request.setAttribute("message",
+						"The following movies are recommended for viewers of " + movieGenre + "genre");
+				request.setAttribute("movieList", recoList);
+				request.getRequestDispatcher("recommendations.jsp").forward(request, response);
+
+			} else {
+				request.setAttribute("haveMovies", "false");
+				request.setAttribute("message", "Sorry!! No recommendations available for this criteria :( ");
+				request.getRequestDispatcher("recommendations.jsp").forward(request, response);
+			}
+		}
+		
 	}
 
 	/**

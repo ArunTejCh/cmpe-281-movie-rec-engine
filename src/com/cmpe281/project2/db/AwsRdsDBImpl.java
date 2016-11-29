@@ -116,5 +116,40 @@ public class AwsRdsDBImpl implements RecEngineDBLayerInterface {
 
 		return movieList;
 	}
+	
+		@Override
+	public List<Movie> getMoviesByGenres(List<String> genres, Double rating, int noOfRatings, int count) {
+		List<Movie> movieList = null;
+		try {
+			if (conn.isClosed()) {
+				openConnection();
+			}
+			String sql;
+			sql = "select * from movies where avg_rating > ? and no_of_ratings > ? and genres LIKE ? ORDER BY avg_rating DESC limit ?";
+			PreparedStatement pst = conn.prepareStatement(sql);
+			pst.setDouble(1, rating);
+			pst.setInt(2, noOfRatings);
+			pst.setString(3, "%" + genres.get(0) + "%");
+			pst.setInt(4, count);
+			ResultSet rs = pst.executeQuery();
+			movieList = new ArrayList<Movie>();
+			while (rs.next()) {
+				// Retrieve by column name
+				String name = rs.getString("title");
+				String curGenres = rs.getString("genres");
+				int no = rs.getInt("no_of_ratings");
+				double curRating = rs.getDouble("avg_rating");
+				movieList.add(new Movie(name, curGenres, Math.round(curRating * 10D) / 10D, no));
+			}
+			rs.close();
+			pst.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return movieList;
+	}
 
 }

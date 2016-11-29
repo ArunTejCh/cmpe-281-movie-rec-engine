@@ -55,7 +55,12 @@ public class SimpleRecoEngineImpl implements RecoEngineInterface {
 
 	@Override
 	public List<Movie> getRecommendationsByGenre(String genreList, Double minRating, int noOfRatings) {
-		return null;
+		List<Movie> mList = new ArrayList<Movie>();
+		List<String> genres = new ArrayList<String>();
+		genres.add(genreList);
+		List<Movie> tempList = db.getMoviesByGenres(genres, minRating, noOfRatings, 5);
+		mList.addAll(tempList);
+		return mList;
 	}
 
 	@Override
