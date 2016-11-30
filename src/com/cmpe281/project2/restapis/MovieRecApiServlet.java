@@ -39,6 +39,7 @@ public class MovieRecApiServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String movieTitle = request.getParameter("name");
+		String movieGenre = request.getParameter("gname");
 		String minAverageRating = request.getParameter("min_rating");
 		String minReviews = request.getParameter("min_reviews");
 		
