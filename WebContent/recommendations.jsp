@@ -27,7 +27,7 @@
 			range : "max",
 			min : 1,
 			max : 5,
-			value : 1,
+			value : 3,
 			step : 0.5,
 			slide : function(event, ui) {
 				$("#min_rating").val(ui.value);
