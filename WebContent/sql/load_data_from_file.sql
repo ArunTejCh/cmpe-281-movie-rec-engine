@@ -9,8 +9,8 @@ INTO TABLE ratings
 FIELDS TERMINATED BY ','
 IGNORE 1 LINES;
 
-UPDATE movies, (select movie_id, count(*) as count, AVG(rating) as rating from ratings group by movie_id) as t2
-SET    movies.no_of_ratings = t2.count
+UPDATE movies, (select movie_id, no_of_ratings, rating from ratings group by movie_id) as t2
+SET    movies.no_of_ratings = t2.no_of_ratings
 , movies.avg_rating = t2.rating
 WHERE  movies.movie_id = t2.movie_id;
 

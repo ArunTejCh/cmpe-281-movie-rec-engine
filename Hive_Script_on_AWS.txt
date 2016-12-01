@@ -10,7 +10,7 @@ set mapred.min.split.size=83886080;
 CREATE EXTERNAL TABLE ratings (uid int,movie_id int,rating int,rating_date timestamp) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
     LOCATION 's3n://inputsuchetamandal/';	
 	
-INSERT OVERWRITE DIRECTORY 's3n://moviedataoutput/' SELECT movie_id , AVG(rating) AS rating FROM ratings GROUP BY movie_id;
+INSERT OVERWRITE DIRECTORY 's3n://moviedataoutput/' SELECT movie_id , AVG(rating) AS rating, count(*) as no_of_ratings FROM ratings GROUP BY movie_id;
 
 CREATE TABLE ratings
 (

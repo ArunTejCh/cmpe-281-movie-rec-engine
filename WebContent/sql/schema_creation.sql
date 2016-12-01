@@ -14,11 +14,10 @@ CREATE TABLE movies
 
 CREATE TABLE ratings
 (
-  user_id int,
   movie_id int,
   rating float(2,1),
-  time_stamp bigint,
-  CONSTRAINT pk_RatingID PRIMARY KEY (user_id,movie_id)
+  no_of_ratings int,
+  CONSTRAINT pk_RatingID PRIMARY KEY (movie_id)
 );
 
 
