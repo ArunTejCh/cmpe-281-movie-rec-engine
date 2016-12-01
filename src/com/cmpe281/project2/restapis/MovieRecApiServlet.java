@@ -84,7 +84,7 @@ public class MovieRecApiServlet extends HttpServlet {
 			List<Movie> recoList = recoEngine.getRecommendationsByGenre(movieGenre, minRatingValues, noOfReviews);
 			if (recoList != null) {
 				request.setAttribute("message",
-						"The following movies are recommended for viewers of " + movieGenre + "genre");
+						"The following movies are recommended for viewers of " + movieGenre + " genre");
 				request.setAttribute("movieList", recoList);
 				request.getRequestDispatcher("recommendations.jsp").forward(request, response);
 
