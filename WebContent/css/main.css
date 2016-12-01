@@ -141,3 +141,7 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+option {
+	padding: 5px;
+}
