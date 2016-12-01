@@ -52,7 +52,7 @@ public class AwsRdsDBImpl implements RecEngineDBLayerInterface {
 	public List<Movie> getTopMovies(String genres, Double rating, int noOfRatings, int count, String curTitle) {
 		List<Movie> movieList = null;
 		try {
-			if(conn.isClosed()){
+			if (conn.isClosed()) {
 				openConnection();
 			}
 			String sql;
@@ -88,7 +88,7 @@ public class AwsRdsDBImpl implements RecEngineDBLayerInterface {
 	public List<Movie> getMoviesByTitle(String title) {
 		List<Movie> movieList = null;
 		try {
-			if(conn.isClosed()){
+			if (conn.isClosed()) {
 				openConnection();
 			}
 			String sql;
@@ -116,21 +116,41 @@ public class AwsRdsDBImpl implements RecEngineDBLayerInterface {
 
 		return movieList;
 	}
-	
-		@Override
+
+	@Override
 	public List<Movie> getMoviesByGenres(List<String> genres, Double rating, int noOfRatings, int count) {
 		List<Movie> movieList = null;
 		try {
 			if (conn.isClosed()) {
 				openConnection();
 			}
-			String sql;
-			sql = "select * from movies where avg_rating > ? and no_of_ratings > ? and genres LIKE ? ORDER BY avg_rating DESC limit ?";
-			PreparedStatement pst = conn.prepareStatement(sql);
+			List<String> likeString = new ArrayList<>();
+			for(String genre :genres){
+				StringBuilder queryBuiler = new StringBuilder();
+				queryBuiler.append("genres LIKE '%"+genre+"%' ");
+				queryBuiler.append(" AND ");
+				likeString.add(queryBuiler.toString());
+			}
+			int numberOfLike = likeString.size();
+			String lastLike = likeString.get(numberOfLike-1);
+			StringBuilder queryBuiler = new StringBuilder(lastLike);
+			int queryLength = queryBuiler.length();
+			queryBuiler.delete(queryLength-5, queryLength-1);
+			likeString.remove(numberOfLike-1);
+			likeString.add(numberOfLike-1, queryBuiler.toString());
+			
+			StringBuilder finalQuery = new StringBuilder();
+			for(String query:likeString){
+				finalQuery.append(query);
+			}
+			
+			String sql1,sql2;
+			sql1 = "select * from movies where avg_rating > ? and no_of_ratings > ? and ";
+			sql2= "ORDER BY avg_rating DESC limit ?";
+			PreparedStatement pst = conn.prepareStatement(sql1+finalQuery.toString()+sql2);
 			pst.setDouble(1, rating);
 			pst.setInt(2, noOfRatings);
-			pst.setString(3, "%" + genres.get(0) + "%");
-			pst.setInt(4, count);
+			pst.setInt(3, count);
 			ResultSet rs = pst.executeQuery();
 			movieList = new ArrayList<Movie>();
 			while (rs.next()) {
