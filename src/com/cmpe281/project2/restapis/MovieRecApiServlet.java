@@ -39,52 +39,57 @@ public class MovieRecApiServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String movieTitle = request.getParameter("name");
-		String movieGenre = request.getParameter("gname");
+		String[] genereList = request.getParameterValues("gName");
 		String minAverageRating = request.getParameter("min_rating");
 		String minReviews = request.getParameter("min_reviews");
-		
-		System.out.println("Outputs  "+movieTitle+" "+minAverageRating+" "+minReviews);
-		
+		System.out.println("Outputs  " + movieTitle + " " + minAverageRating + " " + minReviews);
 
-		List<Movie> similarTitles = db.getMoviesByTitle(movieTitle);
-		if (movieTitle.length()>0) {
-		if (similarTitles != null && similarTitles.size() != 0) {
+		if (movieTitle.length() > 0) {
+			List<Movie> similarTitles = db.getMoviesByTitle(movieTitle);
+			if (similarTitles != null && similarTitles.size() != 0) {
 
-			if (similarTitles.size() == 1) {
-				double minRatingValues = Double.parseDouble(minAverageRating);
-				int noOfReviews = Integer.parseInt(minReviews);
-				
-				List<Movie> recoList = recoEngine.getRecommendations(similarTitles.get(0),minRatingValues,noOfReviews);
-				if (recoList != null) {
-					request.setAttribute("message", "The following movies are recommended for viewers of "+ similarTitles.get(0).getTitle());
-					request.setAttribute("movieList", recoList);
-					request.getRequestDispatcher("recommendations.jsp").forward(request, response);
-					
-				
+				if (similarTitles.size() == 1) {
+					double minRatingValues = Double.parseDouble(minAverageRating);
+					int noOfReviews = Integer.parseInt(minReviews);
+					List<Movie> recoList = recoEngine.getRecommendations(similarTitles.get(0), minRatingValues,
+							noOfReviews);
+					if (recoList != null) {
+						request.setAttribute("message", "The following movies are recommended for viewers of "
+								+ similarTitles.get(0).getTitle());
+						request.setAttribute("movieList", recoList);
+						request.getRequestDispatcher("recommendations.jsp").forward(request, response);
+
+					} else {
+						request.setAttribute("haveMovies", "false");
+						request.setAttribute("message", "Sorry!! No recommendations available for this criteria :( ");
+						request.getRequestDispatcher("recommendations.jsp").forward(request, response);
+					}
 				} else {
-					request.setAttribute("haveMovies", "false");
-					request.setAttribute("message", "Sorry!! No recommendations available for this criteria :( ");
+
+					request.setAttribute("message", "Please select one of the following title names and search again.");
+					request.setAttribute("movieList", similarTitles);
 					request.getRequestDispatcher("recommendations.jsp").forward(request, response);
+
 				}
 			} else {
-				
-				request.setAttribute("message", "Please select one of the following title names and search again.");
-				request.setAttribute("movieList", similarTitles);
+				request.setAttribute("haveMovies", "false");
+				request.setAttribute("message", "Sorry!! No movie with this name is present ");
 				request.getRequestDispatcher("recommendations.jsp").forward(request, response);
-				
 			}
-		} else {
-			request.setAttribute("haveMovies", "false");
-			request.setAttribute("message", "Sorry!! No movie with this name is present ");
-			request.getRequestDispatcher("recommendations.jsp").forward(request, response);
-		}
-	  }else if (movieGenre != null && movieGenre.length()>0) {
+		} else if (genereList != null && genereList.length > 0) {
 			double minRatingValues = Double.parseDouble(minAverageRating);
 			int noOfReviews = Integer.parseInt(minReviews);
-			List<Movie> recoList = recoEngine.getRecommendationsByGenre(movieGenre, minRatingValues, noOfReviews);
-			if (recoList != null) {
+			List<Movie> recoList = recoEngine.getRecommendationsByGenre(genereList, minRatingValues, noOfReviews);
+			if (recoList != null && recoList.size() > 0) {
+				StringBuilder genreBuilder = new StringBuilder();
+
+				for (String genre : genereList) {
+					genreBuilder.append("'").append(genre.replace("'", "\\'")).append("',");
+				}
+
+				genreBuilder.deleteCharAt(genreBuilder.length() - 1);
 				request.setAttribute("message",
-						"The following movies are recommended for viewers of " + movieGenre + "genre");
+						"The following movies are recommended for viewers of " + genreBuilder.toString() + "genre");
 				request.setAttribute("movieList", recoList);
 				request.getRequestDispatcher("recommendations.jsp").forward(request, response);
 
@@ -94,7 +99,6 @@ public class MovieRecApiServlet extends HttpServlet {
 				request.getRequestDispatcher("recommendations.jsp").forward(request, response);
 			}
 		}
-		
 	}
 
 	/**

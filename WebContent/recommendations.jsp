@@ -53,6 +53,14 @@
 		$("#min_reviews").val($("#reviews-slider").slider("value"));
 	});
 </script>
+
+<script type="text/javascript">
+function formAction(){
+    var x=document.getElementById("gName")
+    x.multiple=true
+}
+</script>
+
 </head>
 
 <body>
@@ -76,21 +84,27 @@
 					<div class="col-xs-6 wow animated slideInLeft" data-wow-delay=".5s">
 						<!-- Name -->
 						<input type="text" name="name" id="name" class="form" placeholder="Movie Title" /> 
-						<input type="text" name="gname" id="gname" class="form" placeholder="Genre" /> 
-						<!--div class="dropdown">
-                               <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose Genre
-                               <span class="caret"></span></button>
-                               <ul class="dropdown-menu">
-                                <li><a>Action</a></li>
-                                <li><a href="#">Adventure</a></li>
-                                <li><a href="#">Animation</a></li>
-                                <li><a href="#">Children's</a></li>
-                                <li><a href="#">Comedy</a></li>
-                                <li><a href="#">Crime</a></li>
-                                <li><a href="#">Documentary</a></li>
-                                <li><a href="#">Drama</a></li>
-                                <li><a href="#">Fantasy</a></li>
-                             </ul>
+						<!--input type="text" name="gname" id="gname" class="form" placeholder="Genre"/--> 
+						<select name="gName" id="gName" class="form" size="3" multiple="multiple">
+						   <option value="Action">Action</option>
+       					   <option value="Adventure">Adventure</option>
+                           <option value="Animation">Animation</option>
+        				   <option value="Children">Children's</option>
+                           <option value="Comedy">Comedy</option>
+                           <option value="Crime">Crime</option>
+        				   <option value="Documentary">Documentary</option>
+                           <option value="Drama">Drama</option>
+                           <option value="Fantasy">Fantasy</option>
+                           <option value="Film-Noir">Film-Noir</option>
+                           <option value="Horror">Horror</option>
+                           <option value="Musical">Musical</option>
+                           <option value="Mystery">Mystery</option>
+                           <option value="Romance">Romance</option>
+                           <option value="Sci-Fi">Sci-Fi</option>
+                           <option value="Thriller">Thriller</option>
+                           <option value="War">War</option>
+                           <option value="Western">Western</option>
+                		</select>
                         </div-->
 						<label for="min_rating">Minimum average rating :</label> 
 						  <input type="text" name="min_rating" id="min_rating" style="border: 0; color: #f6931f; font-weight: bold;">

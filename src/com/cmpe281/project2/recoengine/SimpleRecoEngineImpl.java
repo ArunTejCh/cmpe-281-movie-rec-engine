@@ -1,6 +1,7 @@
 package com.cmpe281.project2.recoengine;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.cmpe281.project2.db.AwsRdsDBImpl;
@@ -32,6 +33,7 @@ public class SimpleRecoEngineImpl implements RecoEngineInterface {
 		}
 		return mList;
 	}
+	
 
 	private void truncateGenres(Movie movie) {
 		String [] genreList = movie.getGenres().split("\\|");
@@ -54,10 +56,9 @@ public class SimpleRecoEngineImpl implements RecoEngineInterface {
 	}
 
 	@Override
-	public List<Movie> getRecommendationsByGenre(String genreList, Double minRating, int noOfRatings) {
+	public List<Movie> getRecommendationsByGenre(String[] genreList, Double minRating, int noOfRatings) {
 		List<Movie> mList = new ArrayList<Movie>();
-		List<String> genres = new ArrayList<String>();
-		genres.add(genreList);
+		List<String> genres = Arrays.asList(genreList);
 		List<Movie> tempList = db.getMoviesByGenres(genres, minRating, noOfRatings, 5);
 		mList.addAll(tempList);
 		return mList;

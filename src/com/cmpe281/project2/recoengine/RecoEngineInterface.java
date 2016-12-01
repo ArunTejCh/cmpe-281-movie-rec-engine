@@ -32,7 +32,7 @@ public interface RecoEngineInterface {
 	 * @param noOfRatings
 	 * @return
 	 */
-	List<Movie> getRecommendationsByGenre(String genreList, Double minRating, int noOfRatings);
+	List<Movie> getRecommendationsByGenre(String[] genreList, Double minRating, int noOfRatings);
 	
 	List<Movie> getRecommendations(Movie movie, Double minRating, int noOfRatings);
 
